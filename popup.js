@@ -2,7 +2,7 @@ let status = document.getElementById('status');
 let reverseAll = document.getElementById('reverseAll');
 let reverseSelected = document.getElementById('reverseSelected');
 
-function reverseAll() {
+function reverseAllTabs() {
     return new Promise(
         function(resolve, reject) {
             try {
@@ -19,6 +19,8 @@ function reverseAll() {
                             // status.innerText += "[Done]";
                         });
                     }
+
+                    resolve(tabsCount);
                 });
             } catch(error) {
                 reject(error);
@@ -27,7 +29,7 @@ function reverseAll() {
     );
 }
 
-function reverseSelected() {
+function reverseSelectedTabs() {
     return new Promise(function(resolve, reject) {
         try {
             chrome.tabs.query({highlighted: true}, tabs => {
@@ -55,14 +57,14 @@ function reverseSelected() {
 }
 
 reverseAll.onclick = function(e) {
-    reverseAll().then(tabsCount => {
+    reverseAllTabs().then(tabsCount => {
         // status.innerTest += `[Got back ${tabsCount} tabs]`;
     }, err => console.log(err));
 };
 
 reverseSelected.onclick = function(e) {
     // status.innerText += "[reverseSelected]";
-    reverseSelected().then(tabsCount => {
+    reverseSelectedTabs().then(tabsCount => {
         // status.innerText += `[Got back ${tabsCount} tabs]`;
     }, err => {
         console.log(err);
